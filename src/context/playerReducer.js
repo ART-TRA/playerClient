@@ -106,7 +106,6 @@ export const playerReducer = (state, action) => {
                     if (track.id === action.id) return {...track, like: false}
                 })
             }
-            console.log(state.tracks)
         }
         default:
             return state

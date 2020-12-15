@@ -22,7 +22,8 @@ const TabPanel = ({children, dir}) => (
 );
 
 const Player = (props) => {
-    const {currentTrack, nextTrack, prevTrack, playing, togglePlaying, setPlaylist, getFirstTrack, tracks} = useContext(PlayerContext);
+    // const {currentTrack, nextTrack, prevTrack, playing, togglePlaying, setPlaylist, getFirstTrack, tracks} = useContext(PlayerContext);
+    const {togglePlaying, setPlaylist, getFirstTrack} = useContext(PlayerContext);
     const {loading, error, data} = useQuery(FETCH_PLAYLIST_QUERY);
     const audio = useRef([]);
     useEffect(() => {
