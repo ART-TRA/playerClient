@@ -22,6 +22,7 @@
     "react-apollo": "^3.1.5",
     "react-dom": "^16.14.0",
     "react-lines-ellipsis": "^0.14.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
     "react-swipeable-views": "^0.13.9",
     "react-ticker": "^1.2.2"
@@ -47,7 +48,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://evening-brook-36733.herokuapp.com/",
   "devDependencies": {
     "prop-types": "^15.7.2"
   }

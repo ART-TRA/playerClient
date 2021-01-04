@@ -2,19 +2,4 @@ vol.1
 npm i apollo-boost react-apollo graphql 
 
 vol.2
-npm i apollo graphql graphql-tag apollo-cache-inmemory apollo-link-http apollo-client 
-
-git init
-git add .	
-git commit -m "init"
-git remote add origin git@github.com:ART-TRA/playerClient.git
-git push origin master
-
-heroku create
-git push heroku master
-
-if Everything up-to-date:
-git branch
-git checkout master
-git commit -am "xxxyyzzz"
-git push heroku master  
+npm i apollo graphql graphql-tag apollo-cache-inmemory apollo-link-http apollo-client 	

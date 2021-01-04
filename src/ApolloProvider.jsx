@@ -5,10 +5,10 @@ import {InMemoryCache} from "apollo-cache-inmemory";
 import {ApolloProvider} from "@apollo/client";
 import {PlayerState} from "./context/playerState";
 import {Theme} from "./components/Theme/Theme";
+import {BrowserRouter} from "react-router-dom";
 
 const httpLink = createHttpLink({
-    // uri: 'http://localhost:5000'
-    uri: 'https://evening-brook-36733.herokuapp.com/'
+    uri: 'http://localhost:5000'
 })
 
 const client = new ApolloClient({
@@ -18,8 +18,10 @@ const client = new ApolloClient({
 
 export default (
     <ApolloProvider client={client}>
-        <PlayerState>
-            <Theme/>
-        </PlayerState>
+        <BrowserRouter>
+            <PlayerState>
+                <Theme/>
+            </PlayerState>
+        </BrowserRouter>
     </ApolloProvider>
 )

@@ -15,14 +15,21 @@ import {withStyles} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Grid from '@material-ui/core/Grid';
 import {PlayerContext} from "../../context/playerState";
+import AppBar from "@material-ui/core/AppBar";
 
-
+export const footerHeight = 40;
 const useStyles = makeStyles((theme) => ({
     controls: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        top: "auto",
+        bottom: 0,
+        backgroundColor: "#121212",
         paddingTop: theme.spacing(9),
+        height: `${footerHeight}vh`,
+        boxShadow: 'none',
+        boxSizing: 'border-box',
         [theme.breakpoints.down('xs')]: {
             paddingTop: theme.spacing(1),
         },
@@ -90,7 +97,7 @@ const TimeSlider = withStyles({
 
 export const Actions = ({audio, formatTime, handlePlay}) => {
     const {
-        currentTrack, nextTrack, prevTrack, repeat, shuffle,
+        currentTrack, currentAlbum, nextTrack, prevTrack, repeat, shuffle,
         playing, toggleRepeat, handleEnd, shuffleTracklist
     } = useContext(PlayerContext);
     const classes = useStyles();
@@ -140,67 +147,69 @@ export const Actions = ({audio, formatTime, handlePlay}) => {
     }, []);
 
     return (
-        <div className={classes.controls}>
+        <div>
             <audio onTimeUpdate={updateTime}
                    onCanPlay={onCanPlay}
                    onEnded={onEnded}
                    ref={audio}
                    preload="true"
                    autoPlay={true}
-                   src={currentTrack.sound}
+                   src={currentTrack?.sound}
             />
-            <Typography variant="h5" className={classes.musicTitle}>
-                {currentTrack.name}
-            </Typography>
-            <Typography variant="subtitle1" className={classes.musicTitle}>
-                {currentTrack.artist}
-            </Typography>
-            <div className={classes.timelineController}>
-                <Grid container direction="row" justify="space-between" alignItems="center">
-                    <Grid item>
-                        <Typography variant="body1" color="secondary">
-                            {formatTime(currentTime)} / {formatTime(duration)}
-                        </Typography>
-                    </Grid>
-                    <Grid item container className={classes.volume}>
+            <AppBar position="fixed" className={classes.controls} color="primary">
+                <Typography variant="h5" className={classes.musicTitle}>
+                    {currentTrack.trackName}
+                </Typography>
+                <Typography variant="subtitle1" className={classes.musicTitle}>
+                    {currentAlbum.artist}
+                </Typography>
+                <div className={classes.timelineController}>
+                    <Grid container direction="row" justify="space-between" alignItems="center">
                         <Grid item>
-                            <IconButton aria-label="volume" color="secondary" onClick={soundOff}>
-                                {volume ? <VolumeUp/> : <VolumeOffIcon/>}
-                            </IconButton>
+                            <Typography variant="body1" color="secondary">
+                                {formatTime(currentTime)} / {formatTime(duration)}
+                            </Typography>
                         </Grid>
-                        <Grid item xs>
-                            <Slider value={volume}
-                                    onChange={handleVolume}
-                                    aria-labelledby="continuous-slider"
-                                    color="secondary"
-                                    className={classes.volumeBar}
-                            />
+                        <Grid item container className={classes.volume}>
+                            <Grid item>
+                                <IconButton aria-label="volume" color="secondary" onClick={soundOff}>
+                                    {volume ? <VolumeUp/> : <VolumeOffIcon/>}
+                                </IconButton>
+                            </Grid>
+                            <Grid item xs>
+                                <Slider value={volume}
+                                        onChange={handleVolume}
+                                        aria-labelledby="continuous-slider"
+                                        color="secondary"
+                                        className={classes.volumeBar}
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <TimeSlider value={duration ? currentTime : 0}
-                            onChange={handleDuration}
-                            max={duration}
-                />
-            </div>
-            <div className={classes.actions}>
-                <IconButton aria-label="repeat" onClick={toggleRepeat}>
-                    {repeat ? <RepeatIcon color='secondary'/> : <RepeatIcon/>}
-                </IconButton>
-                <IconButton aria-label="previous" onClick={prevTrack}>
-                    {theme.direction === 'rtl' ? <SkipNextIcon/> : <SkipPreviousIcon/>}
-                </IconButton>
-                <IconButton aria-label="play/pause" onClick={handlePlay} style={{border: '1px solid #f5f5f5'}}>
-                    {playing ? <PauseIcon className={classes.playIcon}/>
-                        : <PlayArrowIcon className={classes.playIcon}/>}
-                </IconButton>
-                <IconButton aria-label="next" onClick={nextTrack}>
-                    {theme.direction === 'rtl' ? <SkipPreviousIcon/> : <SkipNextIcon/>}
-                </IconButton>
-                <IconButton aria-label="shuffle" onClick={shuffleTracklist}>
-                    {shuffle ? <ShuffleIcon color='secondary'/> : <ShuffleIcon/>}
-                </IconButton>
-            </div>
+                    <TimeSlider value={duration ? currentTime : 0}
+                                onChange={handleDuration}
+                                max={duration}
+                    />
+                </div>
+                <div className={classes.actions}>
+                    <IconButton aria-label="repeat" onClick={toggleRepeat}>
+                        {repeat ? <RepeatIcon color='secondary'/> : <RepeatIcon/>}
+                    </IconButton>
+                    <IconButton aria-label="previous" onClick={prevTrack}>
+                        {theme.direction === 'rtl' ? <SkipNextIcon/> : <SkipPreviousIcon/>}
+                    </IconButton>
+                    <IconButton aria-label="play/pause" onClick={handlePlay} style={{border: '1px solid #f5f5f5'}}>
+                        {playing ? <PauseIcon className={classes.playIcon}/>
+                            : <PlayArrowIcon className={classes.playIcon}/>}
+                    </IconButton>
+                    <IconButton aria-label="next" onClick={nextTrack}>
+                        {theme.direction === 'rtl' ? <SkipPreviousIcon/> : <SkipNextIcon/>}
+                    </IconButton>
+                    <IconButton aria-label="shuffle" onClick={shuffleTracklist}>
+                        {shuffle ? <ShuffleIcon color='secondary'/> : <ShuffleIcon/>}
+                    </IconButton>
+                </div>
+            </AppBar>
         </div>
     )
 };

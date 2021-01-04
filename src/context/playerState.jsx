@@ -1,6 +1,6 @@
 import React, {createContext, useReducer} from "react";
 import {
-    cancelLike, getPlaylist,
+    cancelLike, getAlbums, getCurrentAlbum, getPlaylist, getStorageAlbum, getStorageTrack,
     makeLiked,
     playerReducer, reversePlaylist,
     setCurrentTrack, setFirstTrack,
@@ -10,17 +10,9 @@ import {
 } from "./playerReducer";
 
 const initialState = {
-    tracks: [],
-    currentTrack: {
-        // id: tracks[0].id,
-        // name: tracks[0].name,
-        // artist: tracks[0].artist,
-        // sound: tracks[0].sound,
-        // like: tracks[0].like,
-        // cover: tracks[0].cover,
-        // duration: tracks[0].duration,
-    },
-    tracksNumber: 8, //НА ИЗМЕНЕНИЕ!!!!!!!!!!!!!!!!!!!!!!!
+    albums: [],
+    currentTrack: {},
+    currentAlbum: {},
     repeat: false,
     shuffle: false,
     reverse: false,
@@ -30,25 +22,37 @@ const initialState = {
 export const PlayerContext = createContext();
 export const PlayerState = (props) => {
     const [state, dispatch] = useReducer(playerReducer, initialState);
-    const setPlaylist = (playlist) => {
-        dispatch(getPlaylist(playlist))
+    const setAlbums = (albums) => {
+        dispatch(getAlbums(albums))
     }
-    const setTrack = (id) => {
-        dispatch(setCurrentTrack(id))
+    // const setPlaylist = (playlist) => {
+    //     dispatch(getPlaylist(playlist))
+    // }
+    const setTrack = (albumId, trackId) => {
+        dispatch(setCurrentTrack(albumId, trackId))
     };
+    const setCurrentAlbum = (albumId) => {
+        dispatch(getCurrentAlbum(albumId))
+    }
+    // const setStorageAlbum = (album) => {
+    //     dispatch(getStorageAlbum(album))
+    // }
+    const setStorageTrack = (trackId) => {
+        dispatch(getStorageTrack(trackId))
+    }
     //---------------------------------------------------------------------------------
     const prevTrack = () => {
-        const index = state.tracks.findIndex(track => track.id === state.currentTrack.id);
+        const index = state.currentAlbum.tracks.findIndex(track => track.id === state.currentTrack.id);
         index
-            ? dispatch(setCurrentTrack(state.tracks[index - 1].id))
-            : dispatch(setCurrentTrack(state.tracks[state.tracks.length - 1].id))
+            ? dispatch(setCurrentTrack(state.currentAlbum.id, state.currentAlbum.tracks[index - 1].id))
+            : dispatch(setCurrentTrack(state.currentAlbum.id, state.currentAlbum.tracks[state.currentAlbum.tracks.length - 1].id))
     };
 
     const nextTrack = () => {
-        const index = state.tracks.findIndex(track => track.id === state.currentTrack.id);
-        index === (state.tracks.length - 1)
-            ? dispatch(setCurrentTrack(state.tracks[0].id))
-            : dispatch(setCurrentTrack(state.tracks[index + 1].id))
+        const index = state.currentAlbum.tracks.findIndex(track => track.id === state.currentTrack.id);
+        index === (state.currentAlbum.tracks.length - 1)
+            ? dispatch(setCurrentTrack(state.currentAlbum.id, state.currentAlbum.tracks[0].id))
+            : dispatch(setCurrentTrack(state.currentAlbum.id, state.currentAlbum.tracks[index + 1].id))
     };
     //---------------------------------------------------------------------------------
     const togglePlaying = (playing) => {
@@ -76,23 +80,25 @@ export const PlayerState = (props) => {
         dispatch(reversePlaylist())
         dispatch(setReverse())
     }
-    const getFirstTrack = (track) => {
-        dispatch(setFirstTrack(track))
-    }
+    // const getFirstTrack = (track) => {
+    //     dispatch(setFirstTrack(track))
+    // }
     return (
         <PlayerContext.Provider
             value={{
                 currentTrack: state.currentTrack,
-                tracks: state.tracks,
+                currentAlbum: state.currentAlbum,
+                //tracks: state.tracks,
                 repeat: state.repeat,
                 reverse: state.reverse,
                 shuffle: state.shuffle,
                 playing: state.playing,
                 //audio: state.audio,
-                tracksNumber: state.tracksNumber,
+                //tracksNumber: state.tracksNumber,
+                albums: state.albums,
                 nextTrack,
                 prevTrack,
-                setCurrentTrack,
+                //setCurrentTrack,
                 toggleRepeat,
                 togglePlaying,
                 handleEnd,
@@ -101,8 +107,12 @@ export const PlayerState = (props) => {
                 clickUnlike,
                 shuffleTracklist,
                 reverseTracklist,
-                setPlaylist,
-                getFirstTrack
+                // setPlaylist,
+                // getFirstTrack,
+                setAlbums,
+                setCurrentAlbum,
+                // setStorageAlbum,
+                setStorageTrack
             }}>
             {props.children}
         </PlayerContext.Provider>
