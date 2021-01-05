@@ -48,6 +48,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://evening-brook-36733.herokuapp.com/",
   "devDependencies": {
     "prop-types": "^15.7.2"
   }
