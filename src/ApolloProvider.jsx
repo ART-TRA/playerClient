@@ -8,7 +8,7 @@ import {Theme} from "./components/Theme/Theme";
 import {BrowserRouter} from "react-router-dom";
 
 const httpLink = createHttpLink({
-    uri: 'http://localhost:5000'
+    uri: 'https://evening-brook-36733.herokuapp.com/'
 })
 
 const client = new ApolloClient({
