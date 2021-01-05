@@ -12,12 +12,12 @@ import CardContent from "@material-ui/core/CardContent";
 
 const useStyles = makeStyles((theme) => ({
     playlistRoot: {
-        height: `${graphicHeight}vh`,
+        // height: `${graphicHeight}vh`,
         marginTop: `${headerHeight}vh`,
         margin: "auto",
         padding: 10,
         boxSizing: 'border-box',
-
+        overflowY: "auto",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "flex-start",
@@ -25,9 +25,11 @@ const useStyles = makeStyles((theme) => ({
         width: "60%",
         [theme.breakpoints.down('xs')]: {
             width: "100%",
+            justifyContent: "center",
         },
         [theme.breakpoints.up('sm')]: {
             width: "80%",
+
         },
     },
     card: {

@@ -12,6 +12,7 @@ import {useStyles} from "./AppStyles";
 import {TrackPage} from "./components/TrackPage/TrackPage";
 import {Albums} from "./components/Albums/Albums";
 import {Route, Switch} from "react-router-dom";
+import {graphicHeight} from "./components/Graphics/GraphicStyle";
 
 
 const TabPanel = ({children, dir}) => (
@@ -107,14 +108,17 @@ const Player = (props) => {
                             <TrackPage audio={audio} formatTime={formatTime} handlePlay={handlePlay}/>
                         </TabPanel>
                         <TabPanel dir={theme.direction}>
-                            <Switch>
-                                <Route exact path='/albums' render={() => <Albums audio={audio}
-                                                                                  formatTime={formatTime}
-                                                                                  getAlbum={getAlbum}/>}/>
-                                <Route path='/playlist' render={() => <Playlists audio={audio}
-                                                                                 formatTime={formatTime}
-                                                                                 album={album}/>}/>
-                            </Switch>
+                            <div style={{height: `${graphicHeight}vh`,}}>
+                                <Switch>
+                                    <Route exact path='/albums' render={() => <Albums audio={audio}
+                                                                                      formatTime={formatTime}
+                                                                                      getAlbum={getAlbum}/>}/>
+                                    <Route path='/playlist' render={() => <Playlists audio={audio}
+                                                                                     formatTime={formatTime}
+                                                                                     album={album}/>}/>
+                                </Switch>
+                            </div>
+
                         </TabPanel>
                     </SwipeableViews>
                 </div>
