@@ -76,8 +76,8 @@ export const PlayerState = (props) => {
         dispatch(shufflePlaylist())
         dispatch(setShuffle())
     }
-    const reverseTracklist = () => {
-        dispatch(reversePlaylist())
+    const reverseTracklist = (albumId) => {
+        dispatch(reversePlaylist(albumId))
         dispatch(setReverse())
     }
     // const getFirstTrack = (track) => {

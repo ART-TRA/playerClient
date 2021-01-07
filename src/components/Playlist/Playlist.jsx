@@ -139,7 +139,7 @@ export const Playlists = ({audio, formatTime, album}) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="reverse" placement="top">
-                        <IconButton onClick={reverseTracklist}>
+                        <IconButton onClick={() => reverseTracklist(album?.id)}>
                             {reverse ? <SwapVertIcon color='secondary'/> : <SwapVertIcon/>}
                         </IconButton>
                     </Tooltip>

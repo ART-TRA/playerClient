@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {createMuiTheme, makeStyles, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 import Player from "../../App";
-// import img from "../../assets/images/021_OamZ2.png";
 import Paper from "@material-ui/core/Paper";
 
 

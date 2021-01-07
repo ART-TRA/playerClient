@@ -31,11 +31,16 @@ const Player = (props) => {
             setAlbums(data.getAlbums)
             const playTrackId = localStorage.getItem('playingTrack')
             const playAlbumId = localStorage.getItem('playingAlbum')
-            if(playTrackId) {
+            if (playTrackId) {
                 setCurrentAlbum(playAlbumId)
                 setStorageTrack(playTrackId)
             }
             audio.current.pause();
+            if(audio.current.pause()) {
+                console.log("pause")
+            } else {
+                console.log("play")
+            }
         }
     }, [data])
 
@@ -88,8 +93,11 @@ const Player = (props) => {
 
     return (
         <div className={classes.appRoot}>
-            {loading ? <p>Loading ...</p> :
-                // <div className={classes.root}>
+            {loading ?
+                <div className={classes.prWrap}>
+                    <div className={classes.preloader}/>
+                </div>
+                :
                 <div>
                     <Header
                         value={state.value}

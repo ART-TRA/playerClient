@@ -96,6 +96,7 @@ const TimeSlider = withStyles({
 })(Slider);
 
 export const Actions = ({audio, formatTime, handlePlay}) => {
+    const [volume, setVolume] = useState(Number(localStorage.getItem('volume')))
     const {
         currentTrack, currentAlbum, nextTrack, prevTrack, repeat, shuffle,
         playing, toggleRepeat, handleEnd, shuffleTracklist
@@ -103,12 +104,13 @@ export const Actions = ({audio, formatTime, handlePlay}) => {
     const classes = useStyles();
     const theme = useTheme();
     const [duration, setDuration] = useState(0);
-    const [volume, setVolume] = useState(20);
+
     const [currentVolume, setCurrentVolume] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
 
     const handleVolume = (event, newValue) => {
         setVolume(newValue);
+        localStorage.setItem('volume', JSON.stringify(newValue))
         audio.current.volume = newValue / 100;
     };
     const soundOff = (event) => {
@@ -142,8 +144,11 @@ export const Actions = ({audio, formatTime, handlePlay}) => {
     };
     //должно сработать только один раз вначале, чтоб не включился autoPlay
     useEffect(() => {
-        audio.current.pause();
+        if(Number(localStorage.getItem('volume')) == null || undefined) {
+            localStorage.setItem('volume', JSON.stringify(50))
+        }
         audio.current.volume = volume / 100;
+        console.log(volume)
     }, []);
 
     return (

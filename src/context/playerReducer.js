@@ -27,7 +27,7 @@ export const setReverse = () => ({type: SET_REVERSE});
 export const makeLiked = (id) => ({type: MAKE_LIKED, id});
 export const cancelLike = (id) => ({type: CANCEL_LIKE, id});
 export const shufflePlaylist = () => ({type: SHUFFLE_PLAYLIST});
-export const reversePlaylist = () => ({type: REVERSE_PLAYLIST});
+export const reversePlaylist = (albumId) => ({type: REVERSE_PLAYLIST, albumId});
 // export const getPlaylist = (playlist) => ({type: GET_PLAYLIST, playlist});
 // export const setFirstTrack = () => ({type: SET_FIRST_TRACK});
 // export const setFirstTrack = (track) => ({type: SET_FIRST_TRACK, track});
@@ -68,9 +68,12 @@ export const playerReducer = (state, action) => {
             }
         }
         case REVERSE_PLAYLIST: {
+            console.log(action.albumId)
+            const revAl = state.albums.find(album => album.id === action.albumId)
+            console.log("revAl", revAl)
             return {
                 ...state,
-                tracks: state.tracks.reverse()
+                tracks: revAl.tracks.reverse()
             }
         }
         case TOGGLE_PLAYING: {
