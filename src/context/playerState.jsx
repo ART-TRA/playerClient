@@ -1,9 +1,9 @@
 import React, {createContext, useReducer} from "react";
 import {
-    cancelLike, getAlbums, getCurrentAlbum, getPlaylist, getStorageAlbum, getStorageTrack,
+    cancelLike, getAlbums, getCurrentAlbum, getStorageAlbum, getStorageTrack,
     makeLiked,
     playerReducer, reversePlaylist,
-    setCurrentTrack, setFirstTrack,
+    setCurrentTrack,
     setPlaying,
     setRepeat, setReverse,
     setShuffle, shufflePlaylist
@@ -25,18 +25,15 @@ export const PlayerState = (props) => {
     const setAlbums = (albums) => {
         dispatch(getAlbums(albums))
     }
-    // const setPlaylist = (playlist) => {
-    //     dispatch(getPlaylist(playlist))
-    // }
     const setTrack = (albumId, trackId) => {
         dispatch(setCurrentTrack(albumId, trackId))
     };
     const setCurrentAlbum = (albumId) => {
         dispatch(getCurrentAlbum(albumId))
     }
-    // const setStorageAlbum = (album) => {
-    //     dispatch(getStorageAlbum(album))
-    // }
+    const setStorageAlbum = (albumId) => {
+        dispatch(getStorageAlbum(albumId))
+    }
     const setStorageTrack = (trackId) => {
         dispatch(getStorageTrack(trackId))
     }
@@ -72,33 +69,26 @@ export const PlayerState = (props) => {
     const clickUnlike = (track) => {
         dispatch(cancelLike(track))
     };
-    const shuffleTracklist = () => {
-        dispatch(shufflePlaylist())
+    const shuffleTracklist = (albumId) => {
+        dispatch(shufflePlaylist(albumId))
         dispatch(setShuffle())
     }
     const reverseTracklist = (albumId) => {
         dispatch(reversePlaylist(albumId))
         dispatch(setReverse())
     }
-    // const getFirstTrack = (track) => {
-    //     dispatch(setFirstTrack(track))
-    // }
     return (
         <PlayerContext.Provider
             value={{
                 currentTrack: state.currentTrack,
                 currentAlbum: state.currentAlbum,
-                //tracks: state.tracks,
                 repeat: state.repeat,
                 reverse: state.reverse,
                 shuffle: state.shuffle,
                 playing: state.playing,
-                //audio: state.audio,
-                //tracksNumber: state.tracksNumber,
                 albums: state.albums,
                 nextTrack,
                 prevTrack,
-                //setCurrentTrack,
                 toggleRepeat,
                 togglePlaying,
                 handleEnd,
@@ -107,11 +97,9 @@ export const PlayerState = (props) => {
                 clickUnlike,
                 shuffleTracklist,
                 reverseTracklist,
-                // setPlaylist,
-                // getFirstTrack,
                 setAlbums,
                 setCurrentAlbum,
-                // setStorageAlbum,
+                setStorageAlbum,
                 setStorageTrack
             }}>
             {props.children}

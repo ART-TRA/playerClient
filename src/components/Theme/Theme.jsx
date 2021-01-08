@@ -13,8 +13,9 @@ export const Theme = (props) => {
                 main: themeMode === 'light' ? '#121212' : '#ffffff',
             },
             secondary: {
-                main: '#333333',
-            }
+                // main: '#333333',
+                main: '#e91e63',
+            },
         },
         typography: {
 

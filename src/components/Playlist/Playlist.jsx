@@ -90,7 +90,6 @@ export const Playlists = ({audio, formatTime, album}) => {
         setTrack(albumId, trackId);
 
 
-
         if (trackId === currentTrack.id) {
             if (audio.current.paused) {
                 audio.current.play();
@@ -134,52 +133,31 @@ export const Playlists = ({audio, formatTime, album}) => {
 
                     <span style={{display: 'flex'}}>
                     <Tooltip title="shuffle" placement="top">
-                        <IconButton aria-label="shuffle" onClick={shuffleTracklist}>
-                            {shuffle ? <ShuffleIcon color='secondary'/> : <ShuffleIcon/>}
+                        <IconButton aria-label="shuffle" onClick={() => shuffleTracklist(album?.id)}>
+                            {shuffle ? <ShuffleIcon color='primary'/> : <ShuffleIcon/>}
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="reverse" placement="top">
                         <IconButton onClick={() => reverseTracklist(album?.id)}>
-                            {reverse ? <SwapVertIcon color='secondary'/> : <SwapVertIcon/>}
+                            {reverse ? <SwapVertIcon color='primary'/> : <SwapVertIcon/>}
                         </IconButton>
                     </Tooltip>
-                    {/*<Tooltip title="upload" placement="top">*/}
-                    {/*    <div>*/}
-                    {/*        <input accept="audio/*" className={classes.input} id="icon-button-file" type="file"/>*/}
-                    {/*        <label htmlFor="icon-button-file">*/}
-                    {/*            <IconButton color="secondary" aria-label="upload track" component="span">*/}
-                    {/*                <CloudUploadIcon/>*/}
-                    {/*            </IconButton>*/}
-                    {/*        </label>*/}
-                    {/*    </div>*/}
-                    {/*</Tooltip>*/}
+                        {/*<Tooltip title="upload" placement="top">*/}
+                        {/*    <div>*/}
+                        {/*        <input accept="audio/*" className={classes.input} id="icon-button-file" type="file"/>*/}
+                        {/*        <label htmlFor="icon-button-file">*/}
+                        {/*            <IconButton color="secondary" aria-label="upload track" component="span">*/}
+                        {/*                <CloudUploadIcon/>*/}
+                        {/*            </IconButton>*/}
+                        {/*        </label>*/}
+                        {/*    </div>*/}
+                        {/*</Tooltip>*/}
                 </span>
                 </div>
                 <List style={{flexGrow: 1, width: '100%'}}>
                     {tracksList}
                 </List>
             </div>
-
-            {/*<div>*/}
-            {/*    <div className={classes.playlistsHeader}>*/}
-            {/*        <Typography style={{marginRight: 10}}> PLAYLISTS</Typography>*/}
-            {/*        <Tooltip title="reverse" placement="top">*/}
-            {/*            <IconButton onClick={addPlaylist}>*/}
-            {/*                <PlaylistAddIcon/>*/}
-            {/*            </IconButton>*/}
-            {/*        </Tooltip>*/}
-            {/*    </div>*/}
-            {/*    <div className={classes.playlistList}>*/}
-            {/*        {playlists.map(playlist => <ListItem button key={playlist.id} className={classes.playlistsInfo}>*/}
-            {/*            <div className={classes.playCover}>*/}
-            {/*                <img src={playlist.cover} alt="playlist_cover" className={classes.playImg}/>*/}
-            {/*            </div>*/}
-            {/*            <Typography variant="body2" gutterBottom style={{marginLeft: 8}}>*/}
-            {/*                {playlist.name}*/}
-            {/*            </Typography>*/}
-            {/*        </ListItem>)}*/}
-            {/*    </div>*/}
-            {/*</div>*/}
         </div>
     )
 };

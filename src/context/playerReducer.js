@@ -11,13 +11,13 @@ const SET_REVERSE = "SET_REVERSE";
 // const SET_FIRST_TRACK = "SET_FIRST_TRACK";
 const GET_ALBUMS = "GET_ALBUMS";
 const SET_CURRENT_ALBUM = "SET_CURRENT_ALBUM";
-// const SET_STORAGE_ALBUM = "SET_STORAGE_ALBUM";
+const SET_STORAGE_ALBUM = "SET_STORAGE_ALBUM";
 const SET_STORAGE_TRACK = "SET_STORAGE_TRACK";
 
 export const getAlbums = (albums) => ({type: GET_ALBUMS, albums});
 export const getCurrentAlbum = (albumId) => ({type: SET_CURRENT_ALBUM, albumId});
 export const setCurrentTrack = (albumId, trackId) => ({type: SET_CURRENT_TRACK, albumId, trackId});
-// export const getStorageAlbum = (album) => ({type: SET_STORAGE_ALBUM, album})
+export const getStorageAlbum = (albumId) => ({type: SET_STORAGE_ALBUM, albumId})
 export const getStorageTrack = (trackId) => ({type: SET_STORAGE_TRACK, trackId})
 
 export const setPlaying = (playing) => ({type: TOGGLE_PLAYING, playing});
@@ -26,7 +26,7 @@ export const setShuffle = () => ({type: TOGGLE_SHUFFLE});
 export const setReverse = () => ({type: SET_REVERSE});
 export const makeLiked = (id) => ({type: MAKE_LIKED, id});
 export const cancelLike = (id) => ({type: CANCEL_LIKE, id});
-export const shufflePlaylist = () => ({type: SHUFFLE_PLAYLIST});
+export const shufflePlaylist = (albumId) => ({type: SHUFFLE_PLAYLIST, albumId});
 export const reversePlaylist = (albumId) => ({type: REVERSE_PLAYLIST, albumId});
 // export const getPlaylist = (playlist) => ({type: GET_PLAYLIST, playlist});
 // export const setFirstTrack = () => ({type: SET_FIRST_TRACK});
@@ -42,7 +42,18 @@ export const playerReducer = (state, action) => {
             }
         }
         case SET_CURRENT_ALBUM: {
-            const alId = action.albumId.substring(1,action.albumId.length-1)
+            // const alId = action.albumId.substring(1,action.albumId.length-1)
+            const currAl = state.albums?.find(album => album.id === action.albumId)
+            if (currAl) {
+                console.log("currAl", currAl)
+            }
+            return {
+                ...state,
+                currentAlbum: currAl
+            }
+        }
+        case SET_STORAGE_ALBUM: {
+            const alId = action.albumId.substring(1, action.albumId.length - 1)
             const currAl = state.albums?.find(album => album.id === alId)
             return {
                 ...state,
@@ -50,27 +61,28 @@ export const playerReducer = (state, action) => {
             }
         }
         case SET_STORAGE_TRACK: {
-            const trId = action.trackId.substring(1,action.trackId.length-1)
+            const trId = action.trackId.substring(1, action.trackId.length - 1)
             return {
                 ...state,
                 currentTrack: state.currentAlbum.tracks.find(track => track.id === trId)
             }
         }
         case SHUFFLE_PLAYLIST: {
-            for (let i = state.tracks.length - 1; i > 0; --i) {
-                const j = Math.floor(Math.random() * (i + 1));
-                const temp = state.tracks[i];
-                state.tracks[i] = state.tracks[j];
-                state.tracks[j] = temp;
+            const shAl = state.albums.find(album => album.id === action.albumId)
+            if (shAl) {
+                for (let i = shAl.tracks.length - 1; i > 0; --i) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    const temp = shAl.tracks[i];
+                    shAl.tracks[i] = shAl.tracks[j];
+                    shAl.tracks[j] = temp;
+                }
             }
             return {
                 ...state,
             }
         }
         case REVERSE_PLAYLIST: {
-            console.log(action.albumId)
             const revAl = state.albums.find(album => album.id === action.albumId)
-            console.log("revAl", revAl)
             return {
                 ...state,
                 tracks: revAl.tracks.reverse()

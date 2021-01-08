@@ -96,6 +96,16 @@ const TimeSlider = withStyles({
 })(Slider);
 
 export const Actions = ({audio, formatTime, handlePlay}) => {
+    //должно сработать только один раз вначале, чтоб не включился autoPlay
+    useEffect(() => {
+        // if(!Number(localStorage.getItem('volume'))) {
+        //     localStorage.setItem('volume', JSON.stringify(50))
+        //     setVolume(50)
+        // }
+        audio.current.volume = volume / 100;
+        console.log(volume)
+    }, []);
+
     const [volume, setVolume] = useState(Number(localStorage.getItem('volume')))
     const {
         currentTrack, currentAlbum, nextTrack, prevTrack, repeat, shuffle,
@@ -142,14 +152,6 @@ export const Actions = ({audio, formatTime, handlePlay}) => {
             handleEnd()
         }
     };
-    //должно сработать только один раз вначале, чтоб не включился autoPlay
-    useEffect(() => {
-        if(Number(localStorage.getItem('volume')) == null || undefined) {
-            localStorage.setItem('volume', JSON.stringify(50))
-        }
-        audio.current.volume = volume / 100;
-        console.log(volume)
-    }, []);
 
     return (
         <div>
@@ -171,13 +173,13 @@ export const Actions = ({audio, formatTime, handlePlay}) => {
                 <div className={classes.timelineController}>
                     <Grid container direction="row" justify="space-between" alignItems="center">
                         <Grid item>
-                            <Typography variant="body1" color="secondary">
+                            <Typography variant="body1" color="primary">
                                 {formatTime(currentTime)} / {formatTime(duration)}
                             </Typography>
                         </Grid>
                         <Grid item container className={classes.volume}>
                             <Grid item>
-                                <IconButton aria-label="volume" color="secondary" onClick={soundOff}>
+                                <IconButton aria-label="volume" color="primary" onClick={soundOff}>
                                     {volume ? <VolumeUp/> : <VolumeOffIcon/>}
                                 </IconButton>
                             </Grid>
@@ -185,7 +187,7 @@ export const Actions = ({audio, formatTime, handlePlay}) => {
                                 <Slider value={volume}
                                         onChange={handleVolume}
                                         aria-labelledby="continuous-slider"
-                                        color="secondary"
+                                        color="primary"
                                         className={classes.volumeBar}
                                 />
                             </Grid>
@@ -210,7 +212,7 @@ export const Actions = ({audio, formatTime, handlePlay}) => {
                     <IconButton aria-label="next" onClick={nextTrack}>
                         {theme.direction === 'rtl' ? <SkipPreviousIcon/> : <SkipNextIcon/>}
                     </IconButton>
-                    <IconButton aria-label="shuffle" onClick={shuffleTracklist}>
+                    <IconButton aria-label="shuffle" onClick={() => shuffleTracklist(currentAlbum.id)}>
                         {shuffle ? <ShuffleIcon color='secondary'/> : <ShuffleIcon/>}
                     </IconButton>
                 </div>

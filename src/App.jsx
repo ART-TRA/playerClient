@@ -22,7 +22,7 @@ const TabPanel = ({children, dir}) => (
 );
 
 const Player = (props) => {
-    const {togglePlaying, setStorageTrack, setAlbums, setCurrentAlbum} = useContext(PlayerContext);
+    const {togglePlaying, setStorageTrack, setAlbums, setCurrentAlbum, setStorageAlbum} = useContext(PlayerContext);
     const {loading, error, data} = useQuery(FETCH_ALBUMS_QUERY);
     const audio = useRef([]);
 
@@ -32,17 +32,28 @@ const Player = (props) => {
             const playTrackId = localStorage.getItem('playingTrack')
             const playAlbumId = localStorage.getItem('playingAlbum')
             if (playTrackId) {
-                setCurrentAlbum(playAlbumId)
+                setStorageAlbum(playAlbumId)
                 setStorageTrack(playTrackId)
-            }
-            audio.current.pause();
-            if(audio.current.pause()) {
-                console.log("pause")
             } else {
-                console.log("play")
+                //если первый запуск на устр-ве и localStorage пуст
+                console.log('localStorage пуст')
+                localStorage.setItem('playingAlbum', JSON.stringify("5fcdae98e0cf9db0b0ff17b4"))
+                localStorage.setItem('playingTrack', JSON.stringify("5fe2eee8c24a351a54cccb1d"))
+                const playTrackId = localStorage.getItem('playingTrack')
+                const playAlbumId = localStorage.getItem('playingAlbum')
+                if (playTrackId) {
+                    setStorageAlbum(playAlbumId)
+                    setStorageTrack(playTrackId)
+                }
             }
         }
     }, [data])
+
+    useEffect(() => {
+        //у audio стоит autoplay=true, после обновления страницы аудио воспроизводится автоматически
+        //для смены иконок воспроизв-я
+        togglePlaying(true);
+    }, [])
 
     const classes = useStyles();
     const [state, setState] = useState({value: 0});

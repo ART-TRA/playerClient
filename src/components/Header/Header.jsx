@@ -26,7 +26,7 @@ export const Header = ({handleChange, value, handlePlay, themeMode, darkMode, li
     const classes = useStyles();
     return (
         <div>
-            <AppBar position="fixed" className={classes.appBar} color="secondary">
+            <AppBar position="fixed" className={classes.appBar} color="#333333">
                 <Toolbar className={classes.toolBar} style={{padding: 0, minHeight: 'auto'}}>
                     <div className={classes.tabs}>
                         {matches

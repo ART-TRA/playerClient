@@ -102,31 +102,31 @@ export const Track = ({chooseTrack, currentTrack, likeTrack, playing, formatTime
                         {album.artist} - {track.trackName}
                 </div>
                 <div className={classes.track}>
-                    {visible && <div className={classes.trackInfo}>
-                        <Tooltip title="like" placement="top">
-                            <IconButton aria-label="like" onClick={(e) => {
-                                e.stopPropagation();
-                                likeTrack(track.id)
-                            }}>
-                                {track.like ? <FavoriteIcon fontSize="small"/> : <FavoriteBorderIcon fontSize="small"/>}
-                            </IconButton>
-                        </Tooltip>
-                        {/*<Tooltip title="delete" placement="top">*/}
-                        {/*    <IconButton aria-label="delete" onClick={(e) => {*/}
-                        {/*        e.stopPropagation();*/}
-                        {/*        deleteItem(track.id)*/}
-                        {/*    }}>*/}
-                        {/*        <DeleteForeverIcon fontSize="small"/>*/}
-                        {/*    </IconButton>*/}
-                        {/*</Tooltip>*/}
-                        {/*<Tooltip title="download" placement="top">*/}
-                        {/*    <IconButton aria-label="download" onClick={(e) => {*/}
-                        {/*        e.stopPropagation();*/}
-                        {/*    }}>*/}
-                        {/*        <GetAppIcon fontSize="small"/>*/}
-                        {/*    </IconButton>*/}
-                        {/*</Tooltip>*/}
-                    </div>}
+                    {/*{visible && <div className={classes.trackInfo}>*/}
+                    {/*    <Tooltip title="like" placement="top">*/}
+                    {/*        <IconButton aria-label="like" onClick={(e) => {*/}
+                    {/*            e.stopPropagation();*/}
+                    {/*            likeTrack(track.id)*/}
+                    {/*        }}>*/}
+                    {/*            {track.like ? <FavoriteIcon fontSize="small"/> : <FavoriteBorderIcon fontSize="small"/>}*/}
+                    {/*        </IconButton>*/}
+                    {/*    </Tooltip>*/}
+                    {/*    /!*<Tooltip title="delete" placement="top">*!/*/}
+                    {/*    /!*    <IconButton aria-label="delete" onClick={(e) => {*!/*/}
+                    {/*    /!*        e.stopPropagation();*!/*/}
+                    {/*    /!*        deleteItem(track.id)*!/*/}
+                    {/*    /!*    }}>*!/*/}
+                    {/*    /!*        <DeleteForeverIcon fontSize="small"/>*!/*/}
+                    {/*    /!*    </IconButton>*!/*/}
+                    {/*    /!*</Tooltip>*!/*/}
+                    {/*    /!*<Tooltip title="download" placement="top">*!/*/}
+                    {/*    /!*    <IconButton aria-label="download" onClick={(e) => {*!/*/}
+                    {/*    /!*        e.stopPropagation();*!/*/}
+                    {/*    /!*    }}>*!/*/}
+                    {/*    /!*        <GetAppIcon fontSize="small"/>*!/*/}
+                    {/*    /!*    </IconButton>*!/*/}
+                    {/*    /!*</Tooltip>*!/*/}
+                    {/*</div>}*/}
                     {/*{matches && <IconButton aria-label="more" onClick={(e) => {*/}
                     {/*    e.stopPropagation();*/}
                     {/*    showTrackActions()*/}
